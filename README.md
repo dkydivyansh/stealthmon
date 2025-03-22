@@ -1,12 +1,12 @@
 # StealthMon 🕵️‍♂️🔍
 
-**Detect Incognito Mode & Monitor Browser Search Queries**
+**Detect Brouser Mode & Monitor Browser Search Queries**
 
 ## Overview
-StealthMon is a Python module that helps detect whether a browser is running in **Incognito/Private mode** and monitors **search queries** from the system. It is designed for **privacy monitoring, parental control, cybersecurity research, and system audits**.
+StealthMon is a Python module that helps detect whether a browser is running in **Normal or Incognito/Private mode** and monitors **search queries** from the system. It is designed for **privacy monitoring, parental control, cybersecurity research, and system audits**.
 
 ## Features
-✅ **Detect Incognito Mode** – Identify when browsers like **Chrome, Firefox, Edge, Brave, or Opera** are running in private mode.
+✅ **Detect Brouser Mode** – Identify when browsers like **Chrome, Firefox, Edge, Brave, or Opera** are running in private mode.
 ✅ **Monitor Search Queries** – Track user searches made on **Google, Bing, DuckDuckGo, and more**.
 ✅ **Alert System** – Configurable alerts when specific queries are detected.
 ✅ **Multi-Threading Support** – Efficient monitoring with background threads.
