@@ -82,6 +82,25 @@ monitor.start(interval=1.0, callback=handle_results)
 # monitor.stop()
 ```
 
+### Using Simplified API
+```python
+# You can also use the simplified API functions
+from stealthmon import create_monitor, stop_monitoring
+
+# Start monitoring with default settings (checks all browsers every 1 second)
+results = create_monitor()
+
+# Or customize the monitoring
+def handle_results(results, queries):
+    # Process monitoring results
+    pass
+
+results = create_monitor(browser="chrome", interval=2.0, callback=handle_results)
+
+# Later, stop the monitoring
+stop_monitoring()
+```
+
 ## Advanced Usage
 
 ### Tracking Specific Search Queries

@@ -389,9 +389,9 @@ class StealthMon:
         
 # Simplified API
 
-def stealthmon(browser: Optional[str] = None, interval: float = 1.0, callback: Optional[Callable] = None) -> Dict[str, bool]:
+def create_monitor(browser: Optional[str] = None, interval: float = 1.0, callback: Optional[Callable] = None) -> Dict[str, bool]:
     """
-    Check if browsers are running in incognito/private mode and track queries on Windows.
+    Create and start a StealthMon monitor for detecting incognito mode and tracking queries.
     
     Args:
         browser (str, optional): Specific browser to check ('chrome', 'edge', 'firefox', 'opera')
@@ -407,19 +407,22 @@ def stealthmon(browser: Optional[str] = None, interval: float = 1.0, callback: O
     """
     try:
         monitor = StealthMon()
-        stealthmon.monitor = monitor  # Save reference for stop_monitoring
+        create_monitor.active_monitor = monitor  # Save reference for stop_monitoring
         return monitor.start(browser, interval, callback)
     except Exception as e:
         logger.error(f"Failed to start StealthMon: {str(e)}")
         raise
 
 def stop_monitoring():
-    """Stop the continuous monitoring."""
-    if hasattr(stealthmon, 'monitor'):
+    """Stop the continuous monitoring started by create_monitor()."""
+    if hasattr(create_monitor, 'active_monitor'):
         try:
-            stealthmon.monitor.stop()
+            create_monitor.active_monitor.stop()
         except Exception as e:
             logger.error(f"Error stopping monitoring: {str(e)}")
 
-# Create an alias for backward compatibility with documentation
-StealthMonitor = StealthMon 
+# Create aliases for backward compatibility
+StealthMonitor = StealthMon
+
+# Legacy function alias for backward compatibility with existing code
+stealthmon = create_monitor 

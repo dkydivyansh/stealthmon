@@ -17,7 +17,7 @@ if platform.system() == "Windows":
 
 setup(
     name="stealthmon",
-    version="3.1.1",
+    version="3.2.1",
     author="dkydivyansh.com",
     author_email="support@dkydivyansh.com",
     description="A Python module for detecting Incognito mode and monitoring browser search queries",
