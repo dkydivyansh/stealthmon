@@ -419,4 +419,7 @@ def stop_monitoring():
         try:
             stealthmon.monitor.stop()
         except Exception as e:
-            logger.error(f"Error stopping monitoring: {str(e)}") 
+            logger.error(f"Error stopping monitoring: {str(e)}")
+
+# Create an alias for backward compatibility with documentation
+StealthMonitor = StealthMon 
