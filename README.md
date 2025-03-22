@@ -26,7 +26,7 @@ pip install stealthmon
 
 Or install from source:
 ```bash
-git clone https://github.com/yourusername/stealthmon
+git clone https://github.com/dkydivyansh/stealthmon
 cd stealthmon
 pip install -e .
 ```
