@@ -1,0 +1,50 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+    
+    - name: Build package
+      run: python -m build
+    
+    - name: Publish to Test PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository-url: https://test.pypi.org/legacy/
+        skip-existing: true
+    
+    - name: Publish to PyPI
+      if: github.event_name == 'release'
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
+
+# Setup instructions:
+# 1. Go to https://pypi.org/manage/account/token/ and create an API token
+# 2. Add it as a secret in your repository named PYPI_API_TOKEN
+# 
+# 3. Go to https://test.pypi.org/manage/account/token/ and create a test API token
+# 4. Add it as a secret in your repository named TEST_PYPI_API_TOKEN
+#
+# Manual usage:
+# - For testing: Trigger the workflow manually using the "Run workflow" button
+# - For production: Create a new release to automatically publish to PyPI 
