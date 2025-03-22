@@ -1,0 +1,8 @@
+include LICENSE
+include README.md
+include requirements.txt
+
+recursive-include stealthmon *.py
+recursive-include tests *.py
+
+global-exclude *.py[cod] __pycache__ *.so .*.swp .DS_Store 

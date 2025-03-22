@@ -1,0 +1,2 @@
+[console_scripts]
+stealthmon = stealthmon.cli:main

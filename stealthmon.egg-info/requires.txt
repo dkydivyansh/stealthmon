@@ -1,0 +1,4 @@
+psutil>=5.8.0
+setuptools>=65.5.1
+pygame>=2.1.0
+pywin32>=305

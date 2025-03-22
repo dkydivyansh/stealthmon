@@ -1,0 +1,13 @@
+LICENSE
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+stealthmon/__init__.py
+stealthmon/cli.py
+stealthmon.egg-info/PKG-INFO
+stealthmon.egg-info/SOURCES.txt
+stealthmon.egg-info/dependency_links.txt
+stealthmon.egg-info/entry_points.txt
+stealthmon.egg-info/requires.txt
+stealthmon.egg-info/top_level.txt

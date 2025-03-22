@@ -1,0 +1,4 @@
+psutil>=5.8.0
+setuptools>=65.5.1
+pywin32>=305; platform_system=="Windows"
+pygame>=2.1.0 
