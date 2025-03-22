@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Publish to PyPI
 
 on:
@@ -48,3 +49,6 @@ jobs:
 # Manual usage:
 # - For testing: Trigger the workflow manually using the "Run workflow" button
 # - For production: Create a new release to automatically publish to PyPI 
+=======
+
+>>>>>>> 4a48e79f5c0cd45c7b7b1474d8682497a84c2295
