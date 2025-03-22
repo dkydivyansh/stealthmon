@@ -1,4 +1,3 @@
-from stealthmon import stealthmon, stop_monitoring
 import time
 import os
 import subprocess
@@ -6,6 +5,10 @@ import threading
 import tkinter as tk
 from tkinter import font as tkfont
 from datetime import datetime, timedelta
+import sys
+import stealthmon as stealthmon_module
+from stealthmon import StealthMon
+from stealthmon import StealthMonitor
 
 # Check if required libraries are installed, if not install them
 try:
@@ -407,12 +410,18 @@ def print_banner():
 
 # Program entry point
 print_banner()
-results = stealthmon(interval=1, callback=handle_results)
 
+# Create a monitor instance
+monitor = StealthMon()
+
+# Start monitoring with our custom handler
 try:
+    # Start monitoring with the comprehensive handler defined above
+    monitor.start(callback=handle_results)
+    
     # Keep the main thread running
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
     print(f"\n{Colors.YELLOW}Stopping monitoring...{Colors.END}")
-    stop_monitoring()
+    monitor.stop()

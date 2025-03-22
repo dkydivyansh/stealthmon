@@ -17,7 +17,11 @@ if platform.system() == "Windows":
 
 setup(
     name="stealthmon",
+<<<<<<< HEAD
+    version="3.1.1",
+=======
     version="1.2.0",
+>>>>>>> 6c14ba6de30f4b8b4b4b534574d026fe97a23912
     author="dkydivyansh.com",
     author_email="support@dkydivyansh.com",
     description="StealthMon is a Python module that helps detect whether a browser is running in Normal or Incognito/Private mode and monitors search queries from the system. It is designed for privacy monitoring, parental control, cybersecurity research, and system audits.",

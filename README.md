@@ -41,75 +41,110 @@ StealthMon requires the following dependencies:
 
 ## Quick Start
 ```python
+# You can use either StealthMon or StealthMonitor (they're the same)
+from stealthmon import StealthMon
+# or
 from stealthmon import StealthMonitor
 
 # Initialize the monitor
-monitor = StealthMonitor()
+monitor = StealthMon()
 
-# Check for incognito mode
-incognito_browsers = monitor.check_incognito()
-for browser, is_incognito in incognito_browsers.items():
-    print(f"{browser}: {'Incognito Mode' if is_incognito else 'Normal Mode'}")
+# Check for incognito mode for a specific browser
+is_chrome_incognito = monitor.check_browser("chrome")
+print(f"Chrome: {'Incognito Mode' if is_chrome_incognito else 'Normal Mode'}")
+
+# Check all browsers
+for browser in ["chrome", "firefox", "edge", "opera"]:
+    try:
+        is_incognito = monitor.check_browser(browser)
+        print(f"{browser}: {'Incognito Mode' if is_incognito else 'Normal Mode'}")
+    except Exception as e:
+        print(f"{browser}: Error - {str(e)}")
 
 # Start monitoring with a callback function
-def handle_detection(event_type, browser, details):
-    if event_type == "incognito":
-        print(f"Incognito detected: {browser}")
-    elif event_type == "query":
-        print(f"Search query detected: {details['query']} on {details['engine']}")
+def handle_results(results, queries):
+    # results = dict of browser -> incognito status
+    for browser, is_incognito in results.items():
+        if is_incognito:
+            print(f"Incognito detected: {browser}")
+    
+    # queries = dict of browser -> query data
+    for browser, data in queries.items():
+        for query_data in data.get('queries', []):
+            query = query_data.get('query', '')
+            engine = query_data.get('engine', '')
+            print(f"Search query detected: {query} on {engine}")
 
-# Start continuous monitoring
-monitor.start_monitoring(callback=handle_detection)
+# Start continuous monitoring with 1 second interval
+monitor.start(interval=1.0, callback=handle_results)
 
 # To stop monitoring
-# monitor.stop_monitoring()
+# monitor.stop()
 ```
 
 ## Advanced Usage
 
 ### Tracking Specific Search Queries
 ```python
-# Track specific search queries
-monitor = StealthMonitor()
+from stealthmon import StealthMon
 
-def query_callback(browser, query, engine):
-    if "python tutorial" in query.lower():
-        print(f"Educational search detected: {query}")
+# Initialize with configuration
+monitor = StealthMon()
 
-monitor.start_query_tracking(callback=query_callback)
+# Define a callback function that filters specific queries
+def handle_results(results, queries):
+    for browser, data in queries.items():
+        for query_data in data.get('queries', []):
+            query = query_data.get('query', '').lower()
+            if "python tutorial" in query:
+                print(f"Educational search detected: {query}")
+
+# Start monitoring with the callback
+monitor.start(callback=handle_results)
 ```
 
 ### Customizing Detection Behavior
 ```python
+from stealthmon import StealthMon
+
 # Custom configuration
 config = {
     "browsers_to_monitor": ["chrome", "firefox", "edge"],
     "check_interval": 3,  # seconds
     "search_engines": {
-        "google": r"google\.com\/search\?.*q=([^&]+)",
-        "bing": r"bing\.com\/search\?.*q=([^&]+)"
+        "google": {
+            "domain_patterns": ["google.com"],
+            "title_pattern": r"(.+) - Google Search"
+        },
+        "bing": {
+            "domain_patterns": ["bing.com"],
+            "title_pattern": r"(.+) - Bing"
+        }
     }
 }
 
-monitor = StealthMonitor(config=config)
-monitor.start_monitoring()
+# Initialize with custom config
+monitor = StealthMon(config=config)
+
+# Start monitoring
+monitor.start()
 ```
 
-### UI Components for Alerts
-```python
-from stealthmon import StealthMonitor, create_alert_window
+### Command Line Interface
+StealthMon also includes a command-line interface:
 
-monitor = StealthMonitor()
+```bash
+# Check all browsers once
+stealthmon --once
 
-def show_alert(event_type, browser, details):
-    if event_type == "query" and "sensitive" in details['query'].lower():
-        create_alert_window(
-            title="Search Alert",
-            message=f"Sensitive search detected: {details['query']}",
-            duration=10  # seconds
-        )
+# Monitor specific browser continuously
+stealthmon --browser chrome
 
-monitor.start_monitoring(callback=show_alert)
+# Set custom interval
+stealthmon --interval 2.5
+
+# Quiet mode (no continuous display)
+stealthmon --quiet
 ```
 
 ## Error Handling
